@@ -1,0 +1,53 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 658B done
+#1 DONE 0.6s
+
+#2 [internal] load metadata for docker.io/deathwalker66/alpine:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.7s
+
+#4 [1/4] FROM docker.io/deathwalker66/alpine:latest
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 1.59kB done
+#5 DONE 0.6s
+
+#6 [2/4] COPY ./PRC/profile /etc/profile
+#6 DONE 1.0s
+
+#7 [3/4] COPY SCP /SCP
+#7 DONE 1.2s
+
+#8 [4/4] RUN set -eux ;    cd /APP ;    curl -L https://downloads.openobserve.ai/releases/o2-enterprise/v0.80.0/openobserve-ee-v0.80.0-linux-amd64-musl.tar.gz | tar -xzv ;    chmod +x /SCP/* ;    chmod -R 777 /COM ;    /SCP/clean.sh
+#8 1.324 + cd /APP
+#8 1.324 /bin/sh: cd: line 0: can't cd to /APP: No such file or directory
+#8 ERROR: process "/bin/sh -c set -eux ;    cd /APP ;    curl -L https://downloads.openobserve.ai/releases/o2-enterprise/v0.80.0/openobserve-ee-v0.80.0-linux-amd64-musl.tar.gz | tar -xzv ;    chmod +x /SCP/* ;    chmod -R 777 /COM ;    /SCP/clean.sh" did not complete successfully: exit code: 2
+------
+ > [4/4] RUN set -eux ;    cd /APP ;    curl -L https://downloads.openobserve.ai/releases/o2-enterprise/v0.80.0/openobserve-ee-v0.80.0-linux-amd64-musl.tar.gz | tar -xzv ;    chmod +x /SCP/* ;    chmod -R 777 /COM ;    /SCP/clean.sh:
+1.324 + cd /APP
+1.324 /bin/sh: cd: line 0: can't cd to /APP: No such file or directory
+------
+Dockerfile:11
+--------------------
+  10 |     ### [!]: Replace \ + && with ;\
+  11 | >>> RUN set -eux ;\  
+  12 | >>> ### Install OpenObserve  
+  13 | >>>     cd /APP ;\
+  14 | >>>     curl -L https://downloads.openobserve.ai/releases/o2-enterprise/v0.80.0/openobserve-ee-v0.80.0-linux-amd64-musl.tar.gz | tar -xzv ;\
+  15 | >>> ### Set Script Dir
+  16 | >>>     chmod +x /SCP/* ;\
+  17 | >>> ### Set COM Dir
+  18 | >>>     chmod -R 777 /COM ;\
+  19 | >>> ### Clean [!]
+  20 | >>>     /SCP/clean.sh
+  21 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c set -eux ;    cd /APP ;    curl -L https://downloads.openobserve.ai/releases/o2-enterprise/v0.80.0/openobserve-ee-v0.80.0-linux-amd64-musl.tar.gz | tar -xzv ;    chmod +x /SCP/* ;    chmod -R 777 /COM ;    /SCP/clean.sh" did not complete successfully: exit code: 2

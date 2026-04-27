@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  openobserve:
+    image: deathwalker66/openobserve
+    container_name: DEV.OpenObserve
+    hostname: dev-openobserve
+    volumes:
+      - type: bind
+        source: /mnt/Dock/Com
+        target: /COM
+      - type: bind
+        source: ./SCP
+        target: /SCP
+      - ./DAT:/data
+    ports:
+      - target: 22
+        published: 30922
+        protocol: tcp
+        mode: host        
+      - target: 5080
+        published: 30080
+        protocol: tcp 
+    networks:
+      - catnet
+    env_file: 
+      - .env
+    restart: unless-stopped  # Buena práctica para servicios
+    security_opt:
+      - no-new-privileges:true  # Mejor seguridad
+
+networks:
+  catnet:
+    name: catnet  # Definición explícita
+    external: true  # La red ya existe externamente
